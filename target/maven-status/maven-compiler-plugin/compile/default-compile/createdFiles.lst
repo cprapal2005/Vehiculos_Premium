@@ -1,3 +1,5 @@
+Vista\PanelCRUD$2.class
+Vista\PanelCliente$1.class
 Vista\PanelCRUD.class
 DAOs\DAOVehiculoImpl.class
 Recursos\Vehiculo.class
@@ -6,8 +8,15 @@ Controller\ControllerJuego.class
 TestVehiculos\TestVehiculos.class
 Vista\PanelAcercaDe.class
 Vista\PanelCRUD$1.class
+Vista\PanelCliente$4.class
+Vista\PanelCliente.class
 Recursos\GestionVehiculos.class
+Vista\PanelCliente$3.class
 DAOs\IDAOVehiculo.class
+Vista\PanelCliente$2.class
 Controller\ControllerCRUD.class
+Vista\PanelCRUD$4.class
 Vista\VentanaPrincipal.class
+Vista\PanelCRUD$3.class
 Vista\PanelJuego.class
+DAOs\DAOClientes.class

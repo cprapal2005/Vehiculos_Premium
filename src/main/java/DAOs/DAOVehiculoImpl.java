@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 
 public class DAOVehiculoImpl implements IDAOVehiculo {
 	
-	private static IDAOVehiculo dao=null;
-        String url = "jdbc:sqlite:C:\\Users\\dam\\Desktop\\MvcVehiculosBD.db";
+	private static DAOVehiculoImpl dao=null;
+        String url = "jdbc:sqlite:G:\\Mi unidad\\2023-2024\\Acceso a Datos\\MvcVehiculosBD.db";
         Connection conexion;
 
 	private DAOVehiculoImpl() {
@@ -31,17 +31,15 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 		
              try (Connection conexion = DriverManager.getConnection(url)) {
 
-            // Consulta SQL para la inserción
-            String sqlInsercion = "INSERT INTO Vehiculo (marca, modelo, matricula, dniCLiente) VALUES (?, ?, ?, ?)";
+            String sqlInsercion = "INSERT INTO Vehiculos (marca, modelo, matricula, dniCLiente) VALUES (?, ?, ?, ?)";
 
             try (PreparedStatement statement = conexion.prepareStatement(sqlInsercion)) {
-                // Establecer los valores de los parámetros
+                
                 statement.setString(1, vehiculo.getMarca());
                 statement.setString(2, vehiculo.getModelo());
                 statement.setString(3, vehiculo.getMatricula());
                 statement.setString(4, vehiculo.getDniCliente());
 
-                // Ejecutar la inserción
                 int filasAfectadas = statement.executeUpdate();
 
                 if (filasAfectadas > 0) {
@@ -58,25 +56,62 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
             
 	}
 
-	
+	public int actualizarCoche(Vehiculo vehiculo) {
+            
+            try (Connection conexion = DriverManager.getConnection(url)) {
+
+            String sqlUpdate = "UPDATE Vehiculos SET marca = ?, modelo = ?, dniCLiente = ? WHERE matricula = ?";
+
+            try (PreparedStatement statement = conexion.prepareStatement(sqlUpdate)) {
+                
+                statement.setString(1, vehiculo.getMarca());
+                statement.setString(2, vehiculo.getModelo());
+                statement.setString(3, vehiculo.getDniCliente());
+                statement.setString(4, vehiculo.getMatricula());
+
+                int filasAfectadas = statement.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Actualización exitosa");
+                } else {
+                    System.out.println("No se encontró el vehículo con la matrícula: " + vehiculo.getMatricula());
+                }
+            }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            
+            return 1;
+            
+        }
 
 	@Override
 	public int eliminarVehiculo(String matricula) {
-		// TODO Auto-generated method stub
-		return 0;
+		try (Connection conexion = DriverManager.getConnection(url)) {
+
+            String sqlBorrado = "DELETE FROM Vehiculos WHERE matricula = ?";
+
+            try (PreparedStatement statement = conexion.prepareStatement(sqlBorrado)) {
+                
+                statement.setString(1, matricula);
+
+                int filasAfectadas = statement.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Borrado exitoso");
+                } else {
+                    System.out.println("No se encontró el vehículo con la matrícula: " + matricula);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return 1;
 	}
 
-	@Override
-	public int eliminarVehiculos(List<Vehiculo> lstVehiculos) {
-		
-		return 0;
-	}
+	
 
-	@Override
-	public Vehiculo getVehiculo(String matricula) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public List<Vehiculo> getVehiculos() {
@@ -90,7 +125,7 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                 ResultSet resultado = statement.executeQuery("SELECT * FROM Vehiculos");
 
                 while (resultado.next()) {
-                    // Procesar resultados
+                    
                     String marca = resultado.getString("marca");
                     String modelo = resultado.getString("modelo");
                     String matricula = resultado.getString("matricula");
@@ -100,7 +135,6 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
                     
                 }
 
-                // Cerrar recursos
                 resultado.close();
                 statement.close();
                 conexion.close();
@@ -113,16 +147,50 @@ public class DAOVehiculoImpl implements IDAOVehiculo {
 	}
 
 	
-	public static IDAOVehiculo getInstance() {
+	public static DAOVehiculoImpl getInstance() {
 	  if (dao== null) dao =new DAOVehiculoImpl();
 	  
 		return dao;
 	}
-
+        
+        @Override
+	public Vehiculo getVehiculo(String matricula) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+        
 	@Override
 	public int eliminarVehiculo(Vehiculo vehiculo) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+        
+        @Override   
+	public int eliminarVehiculos(String dniCliente) {
+		
+            try (Connection connection = DriverManager.getConnection(url)) {
+                
+            String sql = "DELETE FROM Vehiculos WHERE dniCLiente = ?";
+            
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                
+                statement.setString(1, dniCliente);
+                
+                
+                int filasAfectadas = statement.executeUpdate();
+                
+                
+                if (filasAfectadas > 0) {
+                    System.out.println("Se borraron " + filasAfectadas + " vehículos asociados al cliente con DNI " + dniCliente);
+                } else {
+                    System.out.println("No se encontraron vehículos asociados al cliente con DNI " + dniCliente);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+            
+		return 0;
+	}
+        
 }

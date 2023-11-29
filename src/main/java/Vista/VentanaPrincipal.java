@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 public class VentanaPrincipal extends JFrame implements ActionListener {
 
     private JPanel panelActivo = null;
-    private JMenuItem itemAcerca, itemCRUD, itemSalir, itemJuego;
+    private JMenuItem itemAcerca, itemCRUD, itemSalir, itemJuego, itemCliente;
     
     public VentanaPrincipal() {
         initComponents();
@@ -36,6 +36,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
         MenuFile.add(itemAcerca);
         itemAcerca.addActionListener(this);
+        
+        itemCliente = new JMenuItem("CRUD Cliente");
+        MenuFile.add(itemCliente);
+        itemCliente.addActionListener(this);
 
         itemSalir = new JMenuItem("Salir");
         MenuFile.add(itemSalir);
@@ -55,6 +59,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         else if (e.getSource()== itemCRUD) cambiarPanel(new PanelCRUD());
         
         else if (e.getSource()== itemJuego) cambiarPanel(new PanelJuego());
+        
+        else if (e.getSource()== itemCliente) cambiarPanel(new PanelCliente());
 
     }
     

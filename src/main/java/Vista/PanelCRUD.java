@@ -3,7 +3,9 @@ package Vista;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
 import Controller.ControllerCRUD;
-import javax.swing.JComboBox;
+import DAOs.DAOClientes;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class PanelCRUD extends javax.swing.JPanel {
     
@@ -28,6 +30,10 @@ public class PanelCRUD extends javax.swing.JPanel {
     private javax.swing.JTextField txtModelo;
     
     private javax.swing.JComboBox cmbDniClientes;
+    
+    private javax.swing.JLabel lblCmbDni;
+    
+    private javax.swing.JButton btModificar;
 
     public PanelCRUD() {
         initComponents();
@@ -102,10 +108,18 @@ public class PanelCRUD extends javax.swing.JPanel {
         txtMatricula = new javax.swing.JTextField();
 
         btRegistrar = new javax.swing.JButton();
+        
+        btModificar = new javax.swing.JButton();
 
         btLeer = new javax.swing.JButton();
         
         cmbDniClientes =  new javax.swing.JComboBox();
+        
+        lblCmbDni = new javax.swing.JLabel();
+        
+        lblCmbDni.setText("Dni Cliente:");
+        
+        DAOClientes.getInstance().cargarDniCLientes(cmbDniClientes);
 
         jLabel1.setText("Marca");
 
@@ -130,6 +144,25 @@ public class PanelCRUD extends javax.swing.JPanel {
             }
 
         ));
+        
+        tablaVehiculos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                
+                if (!e.getValueIsAdjusting() && tablaVehiculos.getSelectedRow() != -1) {
+                    
+                    Object marca = tablaVehiculos.getValueAt(tablaVehiculos.getSelectedRow(), 0);
+                    Object modelo = tablaVehiculos.getValueAt(tablaVehiculos.getSelectedRow(), 1);
+                    Object matricula = tablaVehiculos.getValueAt(tablaVehiculos.getSelectedRow(), 2);
+                    Object dniCLiente = tablaVehiculos.getValueAt(tablaVehiculos.getSelectedRow(), 3);
+
+                    txtMarca.setText(marca.toString());
+                    txtModelo.setText(modelo.toString());
+                    txtMatricula.setText(matricula.toString());
+                    cmbDniClientes.setSelectedItem(dniCLiente.toString());
+                }
+            }
+        });
 
         jScrollPane1.setViewportView(tablaVehiculos);
 
@@ -160,8 +193,30 @@ public class PanelCRUD extends javax.swing.JPanel {
             }
 
         });
+        
+        btModificar.setText("Modificar");
 
-        btLeer.setText("Leer");
+        btModificar.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                btModificarActionPerformed(evt);
+
+            }
+
+        });
+
+        btLeer.setText("Borrar");
+        
+        btLeer.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+
+                btLeerActionPerformed(evt);
+
+            }
+
+        });
 
         btLeer.setToolTipText("");
 
@@ -178,16 +233,19 @@ public class PanelCRUD extends javax.swing.JPanel {
                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                        .addComponent(jLabel1)
                                                        .addComponent(jLabel2)
-                                                       .addComponent(jLabelMatricula))
+                                                       .addComponent(jLabelMatricula).addComponent(lblCmbDni).addComponent(cmbDniClientes)
+                                                        ).addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                        .addComponent(txtModelo)
                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                                .addComponent(txtMarca)
                                                                .addComponent(txtMatricula, GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
+                                               
                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                        .addComponent(btRegistrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                       .addComponent(btModificar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                        .addComponent(btLeer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -209,11 +267,12 @@ public class PanelCRUD extends javax.swing.JPanel {
                                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                        .addComponent(jLabelMatricula)
-                                                       .addComponent(txtMatricula, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                                       .addComponent(txtMatricula, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                               ))
                                        .addGroup(layout.createSequentialGroup()
-                                               .addGap(15)
+                                               .addGap(15).addComponent(btModificar)
                                                .addComponent(btLeer)))
-                               .addGap(26)
+                               .addGap(26).addComponent(lblCmbDni).addComponent(cmbDniClientes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
                                .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -225,6 +284,18 @@ public class PanelCRUD extends javax.swing.JPanel {
     private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {										
  
         ControllerCRUD.insertarVehiculo(this, tablaVehiculos);
+
+    }
+    
+    private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {										
+ 
+        ControllerCRUD.actualizarVehiculo(this, tablaVehiculos);
+
+    }
+    
+    private void btLeerActionPerformed(java.awt.event.ActionEvent evt) {										
+ 
+        ControllerCRUD.borrarVehiculo(this, tablaVehiculos);
 
     }
     

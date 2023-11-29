@@ -1,6 +1,5 @@
 package Controller;
 
-
 import javax.swing.JOptionPane;
 import Recursos.GestionVehiculos;
 import Vista.PanelJuego;
