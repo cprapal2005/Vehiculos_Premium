@@ -32,11 +32,13 @@ public class ControllerCRUD
 	 modelo.addColumn("Modelo");
 
 	 modelo.addColumn("Matricula");
+         
+         modelo.addColumn("DNI CLiente");
 
 	
     
    
-	 Object[] registroLeido = new Object [3];
+	 Object[] registroLeido = new Object [4];
 	 
 	 for(Vehiculo vehiculo:lstVehiculos)
 
@@ -47,6 +49,8 @@ public class ControllerCRUD
 			registroLeido[1]= vehiculo.getModelo();
 
 			registroLeido[2]=  vehiculo.getMatricula();
+                        
+                        registroLeido[3]=  vehiculo.getDniCliente();
 	 
 
 
@@ -70,6 +74,10 @@ public class ControllerCRUD
 	 vehiculo.setModelo(frmVehiculo.getTxtModelo().getText());
 
 	 vehiculo.setMatricula(frmVehiculo.getTxtMatricula().getText());
+         
+         vehiculo.setDniCliente(frmVehiculo.getTxtMatricula().getText());
+         
+         
 	 
 		if (DAOVehiculoImpl.getInstance().insertarVehiculo(vehiculo)!=0)
 		{insertado=true;

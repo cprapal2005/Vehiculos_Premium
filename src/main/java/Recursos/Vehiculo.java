@@ -7,16 +7,19 @@ public class Vehiculo {
     private String modelo;
 
     private String matricula;
+    
+    private String dniCliente;
 
     public Vehiculo() {
 
     }
 
-    public Vehiculo(String marca, String modelo, String matricula) {
+    public Vehiculo(String marca, String modelo, String matricula, String dniCliente) {
 
             this.marca = marca;
             this.modelo = modelo;
             this.matricula = matricula;
+            this.dniCliente = dniCliente;
     }
 
     public String getMarca() {
@@ -42,12 +45,20 @@ public class Vehiculo {
     public void setMatricula(String matricula) {
             this.matricula = matricula;
     }
+    
+    public String getDniCliente() {
+        return dniCliente;
+    }
+
+    public void setDniCliente(String dniCliente) {
+        this.dniCliente = dniCliente;
+    }
 
     @Override
     public String toString() {
-        
-        return "Vehiculo [marca=" + marca + ", modelo=" + modelo + ", matricula=" + matricula + "]";
-            
+        return "Vehiculo{" + "marca=" + marca + ", modelo=" + modelo + ", matricula=" + matricula + ", dniCliente=" + dniCliente + '}';
     }
+
+    
 
 }

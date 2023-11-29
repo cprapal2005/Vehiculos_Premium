@@ -3,6 +3,7 @@ package Vista;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle;
 import Controller.ControllerCRUD;
+import javax.swing.JComboBox;
 
 public class PanelCRUD extends javax.swing.JPanel {
     
@@ -25,6 +26,8 @@ public class PanelCRUD extends javax.swing.JPanel {
     private javax.swing.JTextField txtMarca;
 
     private javax.swing.JTextField txtModelo;
+    
+    private javax.swing.JComboBox cmbDniClientes;
 
     public PanelCRUD() {
         initComponents();
@@ -72,6 +75,14 @@ public class PanelCRUD extends javax.swing.JPanel {
             this.txtModelo = txtModelo;
     }
     
+    public javax.swing.JComboBox getCmbDniCLientes() {
+            return cmbDniClientes;
+    }
+
+    public void setTxtModelo(javax.swing.JComboBox cmbDniClientes) {
+            this.cmbDniClientes = cmbDniClientes;
+    }
+    
     private void inicializarPanel() {
         
         jLabel1 = new javax.swing.JLabel();
@@ -93,6 +104,8 @@ public class PanelCRUD extends javax.swing.JPanel {
         btRegistrar = new javax.swing.JButton();
 
         btLeer = new javax.swing.JButton();
+        
+        cmbDniClientes =  new javax.swing.JComboBox();
 
         jLabel1.setText("Marca");
 

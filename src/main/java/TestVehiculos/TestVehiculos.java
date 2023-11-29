@@ -9,6 +9,7 @@ public class TestVehiculos {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    Class.forName("org.sqlite.JDBC");
                     VentanaPrincipal frame = new VentanaPrincipal();
                     frame.setVisible(true);
                 } catch (Exception e) {
